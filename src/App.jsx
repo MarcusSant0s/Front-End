@@ -3,7 +3,7 @@ import { useState } from 'react'
 
  import Form from './components/Form/Form'
  import SideBar from './components/SideBar/SideBar'
- import NavBar from './components/NavBar/NavBar'
+ import Header from './components/Header/Header'
 import './App.css'
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
   return (
     <div>
 
+          <Header />
           <Form />
     
       </div>
