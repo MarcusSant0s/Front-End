@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import InputMask from "react-input-mask"; // Importando o InputMask para campos de telefone e documento
+// Importando o InputMask para campos de telefone e documento
+import InputMask from "react-input-mask"; 
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Form() {
   // Estado do formulário
@@ -155,14 +158,18 @@ export default function Form() {
 
     // Somente enviar o formulário se ele for válido
     if (formIsValid) {
-      alert("Formulário enviado com sucesso!");
+      toast.success('Formulário enviado com sucesso!', {
+        position: "bottom-right",
+        autoClose: 2000,
+      });
+      
       // Aqui você pode realizar a lógica de envio para a API ou outro processo
     }
   };
 
   return (
-    <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-2">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6">Formulário de Cadastro</h2>
+    <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-2 lg:-mt-14">
+      <h2 className="text-2xl font-semibold text-white bg-custom-orange px-2 py-1 rounded-md mb-6">Formulário de Cadastro</h2>
 
       <h4 className="font-semibold text-gray-600 mb-1 border-b border-gray-300">Dados Pessoais</h4>
       <form onSubmit={handleFormSubmit}>
@@ -354,12 +361,14 @@ export default function Form() {
         <div className="mt-6">
           <button
             type="submit"
-            className="w-full py-3 px-4 text-white bg-gray-900 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400"
+            className="w-full py-3 px-4 text-white bg-custom-black rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400"
           >
             Enviar
           </button>
         </div>
       </form>
+      <ToastContainer   style={{ width: "max-con" }}   />
+
     </div>
   );
 }

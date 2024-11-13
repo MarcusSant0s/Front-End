@@ -16,6 +16,7 @@ function App() {
 
           <Header />
           <Form />
+          <SideBar />
     
       </div>
   
@@ -27,7 +28,7 @@ function App() {
 //   </div>
 //   <div className=" md:col-span-1 sm:hidden">
 //     {/* SideBar */}
-//     <SideBar />
+//     
 //   </div>
 //   <div className="col-span-3 ">
 //     {/* Form */}
