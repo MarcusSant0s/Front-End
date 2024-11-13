@@ -94,8 +94,8 @@ export default function Form() {
             className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:outline-none"
           >
             <option value="" disabled hidden className="">Selecione o tipo de documento</option> 
-            <option value="CPF">CPF</option>
-            <option value="CNPJ">CNPJ</option>
+            <option value="CPF" className=" ">CPF</option>
+            <option value="CNPJ" className=" ">CNPJ</option>
  
           </select>
         </div>
@@ -126,7 +126,7 @@ export default function Form() {
             name="gender"
             value={values.gender}
             onChange={handleChange}
-            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:outline-none"
+            className="mt-1 p-3 w-full border border-gray-300 rounded-md focus:ring-2 focus:ring-gray-400 focus:outline-none "
           >
             <option value=""  disabled hidden >Selecione o gênero</option>
             <option value="male">Masculino</option>
