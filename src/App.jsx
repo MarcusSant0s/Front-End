@@ -1,24 +1,68 @@
-import { useState } from 'react' 
 
-
- import Form from './components/Form/Form'
- import SideBar from './components/SideBar/SideBar'
- import Header from './components/Header/Header'
 import './App.css'
+ 
+import { Routes, Route } from 'react-router-dom';
+import Layout from './routes/Layout';
+import Home from './routes/Home';
+import Login from './routes/Login'
+import PageNotFound from './routes/PageNotFound';
+
+import StateForm from './components/Form/StateForm';
+import CityForm from './components/Form/CityForm';
+import UserForm from './components/Form/UserForm';
+
+
 
 function App() {
 
-  const [isNavBarActive, setIsNavBarActive] = useState(false)
+
    
 
   return (
-    <div>
+    <Routes>
+      {/* Rota para Login */}
+      <Route path="/Login" element={<Login />} />
 
-          <Header />
-          <Form />
-          <SideBar />
-    
-      </div>
+      {/* Mask - evita repetição de componentes */}
+      <Route path="/" element={<Layout />}>
+         
+        {/* Cadastro User */}
+        <Route
+            path="cadastro/user"
+            element={
+            <UserForm />
+            } 
+        />
+
+        {/* Cadastro Estado */}
+        <Route
+            path="cadastro/estado"
+            element={
+            <StateForm />
+            } 
+        />
+        
+        <Route
+            path="cadastro/cidade"
+            element={
+            <CityForm />
+            } 
+        />
+        
+
+      </Route>
+      
+      {/* Rota de erro */}
+        <Route 
+          path="*" 
+          element={
+          <PageNotFound />
+          }
+        />
+
+  </Routes>
+
+ 
   
 
 //   <div className="grid md:grid-cols-4 md:gap-6 ">
