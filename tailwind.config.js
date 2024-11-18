@@ -7,8 +7,9 @@ export default {
   theme: {
     extend: {
       colors: {
-        'custom-black': '#040404',
-        'custom-orange': '#FF9100',
+        'custom-black': '#040404', // adiciona preto customizado
+        'custom-orange': '#FF9100', // Adiciona laranja customizada
+        'custom-gray': '#F5F5F5',   // Adiciona um cinza customizado
       },
     },
   },
