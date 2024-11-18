@@ -11,6 +11,9 @@ export default {
         'custom-orange': '#FF9100', // Adiciona laranja customizada
         'custom-gray': '#F5F5F5',   // Adiciona um cinza customizado
       },
+      fontFamily: {
+        'dm-serif': ['"DM Serif Text"', 'serif'],
+      },
     },
   },
   plugins: [],

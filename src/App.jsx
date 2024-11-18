@@ -2,8 +2,7 @@
 import './App.css'
  
 import { Routes, Route } from 'react-router-dom';
-import Layout from './routes/Layout';
-import Home from './routes/Home';
+import Layout from './routes/Layout'; 
 import Login from './routes/Login'
 import PageNotFound from './routes/PageNotFound';
 
@@ -11,6 +10,11 @@ import StateForm from './components/Form/StateForm';
 import CityForm from './components/Form/CityForm';
 import UserForm from './components/Form/UserForm';
 
+const formRoutes = [
+  { path: "cadastro/user", element: <UserForm /> },
+  { path: "cadastro/estado", element: <StateForm /> },
+  { path: "cadastro/cidade", element: <CityForm /> },
+];
 
 
 function App() {
@@ -20,36 +24,28 @@ function App() {
 
   return (
     <Routes>
+
       {/* Rota para Login */}
-      <Route path="/Login" element={<Login />} />
+      <Route
+        path="/Login" 
+        element={
+        <Login />
+        }
+       />
 
       {/* Mask - evita repetição de componentes */}
       <Route path="/" element={<Layout />}>
          
-        {/* Cadastro User */}
-        <Route
-            path="cadastro/user"
-            element={
-            <UserForm />
-            } 
-        />
-
-        {/* Cadastro Estado */}
-        <Route
-            path="cadastro/estado"
-            element={
-            <StateForm />
-            } 
-        />
+      {
+      formRoutes.map(
+        (route, index) => (
+                            <Route  
+                              key={index} 
+                              path={route.path} 
+                              element={route.element}
+                            />
+      ))}
         
-        <Route
-            path="cadastro/cidade"
-            element={
-            <CityForm />
-            } 
-        />
-        
-
       </Route>
       
       {/* Rota de erro */}

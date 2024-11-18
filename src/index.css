@@ -2,4 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
- 
+@layer utilities {
+    .triangle-1::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+      border-left: 320px solid transparent;
+      border-bottom: 320px solid #666; /* Lighter color */
+  
+    }
+  
+    .triangle-2::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 0;
+      height: 0;
+
+      border-right: 320px solid transparent;
+      border-bottom: 320px solid #484747;
+    }
+  }
