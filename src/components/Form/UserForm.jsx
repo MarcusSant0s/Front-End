@@ -170,8 +170,8 @@ export default function Form() {
   return (
     
     
-    <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-2 lg:-mt-14">
-      <h2 className="text-2xl font-semibold text-white bg-custom-orange px-2 py-1 rounded-md mb-6">Formulário de Cadastro</h2>
+    <div className="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-lg mt-2">
+      <h2 className="text-2xl font-semibold text-white bg-custom-orange px-2 py-1 rounded-md mb-6 text-center">Formulário de Cadastro</h2>
 
       <h4 className="font-semibold text-gray-600 mb-1 border-b border-gray-300">Dados Pessoais</h4>
       

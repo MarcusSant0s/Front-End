@@ -9,10 +9,10 @@ const Login = () => {
         <div className="min-h-screen bg-custom-gray text-black ">
             
             <div class="relative bg-gray-800 h-80">
-            <div class="absolute top-0 right-0 w-1/2 h-full bg-gray-800 opacity-50 z-10">
-                <div class="absolute top-0 right-0 w-full h-full triangle-1"></div>
-                <div class="absolute top-0 right-0 w-full h-full triangle-2 opacity-60"></div>
-            </div>
+                <div class="absolute top-0 right-0 w-1/2 h-full bg-gray-800 opacity-50 z-10">
+                    <div class="absolute top-0 right-0 w-full h-full triangle-1"></div>
+                    <div class="absolute top-0 right-0 w-full h-full triangle-2 opacity-60"></div>
+                </div>
             </div>
 
         <main className="p-6">

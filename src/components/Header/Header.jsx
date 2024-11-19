@@ -28,12 +28,12 @@ const Header = () => {
   }, [isSidebarAppears]);
 
   return (
-    <header className='bg-custom-orange flex justify-between items-center px-4'>
+    <header className='bg-gray-800 flex justify-between items-center px-4 py-2'>
       {/* Icon Logo */}
       <div>
         <a href="">
-          <img src={IconLogo} alt="HomePage Icon" className='w-28' />
-        </a>
+        <h1 className='font-dm-serif text-custom-orange text-3xl font-bold italic '> CABOSAT </h1>
+                  </a>
       </div>
 
       {/* Sobreposição e Menu */}
@@ -48,7 +48,7 @@ const Header = () => {
           onClick={(e) => e.stopPropagation()} // Impede o clique no menu de fechar a sidebar
         >
           <h4 
-          className="text-2xl  mb-2 border-b border-b-custom-orange"
+          className="text-2xl  mb-2 border-b bg-gray-800 text-white w-full px-2 py-1"
           >Menu
           </h4>
           <a href="#" className=" w-full px-2 py-2">Exemplo 1</a>

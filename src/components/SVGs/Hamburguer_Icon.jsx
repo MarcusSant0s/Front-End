@@ -10,7 +10,7 @@ const Hamburguer_Icon = () => {
     strokeWidth="2"
     strokeLinecap="round"
     strokeLinejoin="round"
-    className="w-8 h-8"
+    className="w-8 h-8  text-white "
   >
     <path d="M3 12h18M3 6h18M3 18h18"></path>
   </svg>

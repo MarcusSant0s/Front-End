@@ -11,7 +11,7 @@ const StateForm = () => {
     // Dados a serem enviados para o servidor
     const stateData = {
       stateName: stateName
-    };
+    }; 
 
     // Configuração da requisição, incluindo a autenticação básica
     const config = {
@@ -31,22 +31,36 @@ const StateForm = () => {
   };
 
   return (
-    <div>
-      <h2>Cadastro de Estado</h2>
-      <form onSubmit={handleSubmit}>
+    <div className="min-h-screen text-gray-800">
+
+    <main className="p-6">
+    <section className="h-screen flex flex-col  "> 
+     <form onSubmit={handleSubmit} className='mx-auto flex flex-col
+        items-center justify-center 
+        p-2 w-max  mx-aut
+        bg-white rounded-md gap-2
+        shadow-lg border border-black/10'>
+       <h2 className='font-semibold'>Cadastro de UF</h2>
         <div>
-          <label htmlFor="stateName">Nome do Estado:</label>
-          <input
-            type="text"
-            id="stateName"
-            value={stateName}
-            onChange={(e) => setStateName(e.target.value)}
-            required
-          />
+           <input
+             className='border-b border-b-gray-300 px-1'
+              type="text"
+              id="stateName"
+              placeholder='Nome'
+              value={stateName}
+              onChange={(e) => setStateName(e.target.value)}
+              required
+            />
         </div>
-        <button type="submit">Submit</button>
+        <button 
+          className='ml-auto bg-green-500
+           text-white font-semibold px-2 
+           py-1 rounded-sm '
+          type="submit">Salvar</button>
       </form>
+      </section>
       {responseMessage && <p>{responseMessage}</p>}
+      </main>
     </div>
   );
 };
