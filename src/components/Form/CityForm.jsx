@@ -31,24 +31,37 @@ const CityForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-custom-gray text-gray-800">
-        <header className="bg-white shadow-md p-4">
-            <h2>Cadastro da Cidade</h2>
-        </header> 
+    <div className="min-h-screen text-gray-800">
+
         <main className="p-6">
         <section className="h-screen flex flex-col  ">
-      <form onSubmit={handleSubmit} className='flex flex-col items-center justify-center p-2 w-max  mx-auto bg-white rounded-md'>
+          
+      <form onSubmit={handleSubmit}
+        className='mx-auto flex flex-col
+        items-center justify-center 
+        p-2 w-max  mx-aut
+        bg-white rounded-md gap-2
+        shadow-lg border border-black/10'
+        >
+      
+            <h2 className='font-semibold'>Cadastro de municípios </h2>
+         
         <div>
-          <label htmlFor="cityName">Nome:</label>
           <input
+          className='border-b border-b-gray-300 px-1'
             type="text"
             id="cityName"
+            placeholder='Nome'
             value={cityName}
             onChange={(e) => setCityName(e.target.value)}
             required
           />
         </div>
-        <button type="submit">Submit</button>
+        <button 
+          className='ml-auto bg-green-500
+           text-white font-semibold px-2 
+           py-1 rounded-sm '
+          type="submit">Salvar</button>
       </form>
       {responseMessage && <p>{responseMessage}</p>}
     </section>
