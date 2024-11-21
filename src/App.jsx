@@ -5,21 +5,18 @@ import { Routes, Route } from 'react-router-dom';
 
 import PageNotFound from './routes/PageNotFound';
 import Layout from './routes/Layout'; 
-import CostumerForm from './components/Form/CostumerForm';
 
 import Login from './routes/Login'
 import Home from './routes/Home';
 
-
-import StateForm from './components/Form/StateForm';
-import CityForm from './components/Form/CityForm';
-import UserForm from './components/Form/UserForm';
+import TableProduct from './components/Table/TableProduct';
+import TableCollaborators from './components/Table/TableCollaborators';
 
 const formRoutes = [
-  { path: "cadastro/user", element: <UserForm /> },
-  { path: "cadastro/estado", element: <StateForm /> },
-  { path: "cadastro/cidade", element: <CityForm /> },
-  { path: "cadastro/cliente", element: <CostumerForm /> },
+
+  { path: "tabela/colaborator", element: <TableCollaborators /> },
+  { path: "tabela/produto", element: <TableProduct/> },
+
 ];
 
 
@@ -35,9 +32,9 @@ function App() {
 
       {/* Mask - evita repetição de componentes */}
       <Route path="/" element={<Layout />}>
-        <Route path="/home" element={<Home />} />
-
-        {formRoutes.map((route, index) => (
+      
+      <Route path="" element={<Home />} />
+          {formRoutes.map((route, index) => (
           <Route key={index} path={route.path} element={route.element} />
         ))}
       </Route>
