@@ -1,12 +1,12 @@
-import { useState } from 'react'
-import UserForm from '../components/Form/UserForm'
+import { useState } from 'react';
+import TableCollaborator from '../components/Table/TableCollaborators';
 
 
 const Home = () => {
   const [isNavBarActive, setIsNavBarActive] = useState(false)
 
   return (
-          <UserForm />
+          <h1>Home</h1>
   )
 }
 

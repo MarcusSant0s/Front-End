@@ -7,10 +7,10 @@ import SideBar from '../components/SideBar/SideBar'
 
 const Layout = () => {
   return (
-    <div>
+    <div className='flex flex-col min-h-screen'>
        <Header />
     {/*<SideBar />*/}
-      <main>
+      <main className='flex-grow'>
         <Outlet /> {/* Onde as páginas específicas serão renderizadas */}
       </main>
     <Footer/>

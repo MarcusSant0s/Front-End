@@ -14,7 +14,7 @@ const CollaboratorForm: React.FC<CollaboratorFormProps> = ({
   onSave,
 }) => {
   const [formData, setFormData] = useState<Collaborator>({
-    id: collaborator ? collaborator.id : null,
+    id: collaborator ? collaborator.id : undefined,
     name: collaborator ? collaborator.name : '',
     lastName: collaborator ? collaborator.lastName : '',
     cpf: collaborator ? collaborator.cpf : '',
