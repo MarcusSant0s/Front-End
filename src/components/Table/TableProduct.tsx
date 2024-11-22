@@ -65,11 +65,15 @@ const TableProduct: React.FC = () => {
             <th className="py-2 px-4 border-b">Descrição</th>
             <th className="py-2 px-4 border-b">Número de Série</th>
             <th className="py-2 px-4 border-b">Ações</th>
+            <th className="py-2 px-4 border-b">Ativo</th>
+
           </tr>
         </thead>
         <tbody>
           {products.map((product) => (
             <tr key={product.id}>
+              <td className="py-2 px-4 border-b">{product.serialNumber}</td>
+
               <td className="py-2 px-4 border-b">{product.description}</td>
               <td className="py-2 px-4 border-b">{product.serialNumber}</td>
               <td className="py-2 px-4 border-b">
