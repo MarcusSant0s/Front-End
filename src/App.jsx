@@ -9,18 +9,22 @@ import Layout from './routes/Layout';
 import Login from './routes/Login'
 import Home from './routes/Home';
 
+import TableRole from './components/Table/TableRole'
 import TableProduct from './components/Table/TableProduct';
 import TableCollaborators from './components/Table/TableCollaborators';
-
+import TableServiceOrder from './components/Table/TableServiceOrder';
 import TableStock from './components/Table/TableStock';
-import TableClient from './components/Table/TableClient'
+import TableClient from './components/Table/TableClient';
 
 const formRoutes = [
 
-  { path: "tabela/colaborator", element: <TableCollaborators /> },
+  { path: "tabela/colaborador", element: <TableCollaborators /> },
   { path: "tabela/produto", element: <TableProduct/> },
   { path: "tabela/estoque", element: <TableStock/> },
   { path: "tabela/cliente", element: <TableClient/> },
+  { path: "tabela/ordem-servico", element: <TableServiceOrder/> },
+  { path: "tabela/funções", element: <TableRole/> },
+
 
 
 ];
