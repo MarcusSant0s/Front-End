@@ -51,7 +51,8 @@ const TableCollaborators: React.FC = () => {
   };
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container max-sm:w-screen  md:mx-auto mt-8 md:px-4">
+
       <h1 className="text-2xl font-bold mb-4">Colaboradores</h1>
       <button
         onClick={handleAdd}
