@@ -12,10 +12,16 @@ import Home from './routes/Home';
 import TableProduct from './components/Table/TableProduct';
 import TableCollaborators from './components/Table/TableCollaborators';
 
+import TableStock from './components/Table/TableStock';
+import TableClient from './components/Table/TableClient'
+
 const formRoutes = [
 
   { path: "tabela/colaborator", element: <TableCollaborators /> },
   { path: "tabela/produto", element: <TableProduct/> },
+  { path: "tabela/estoque", element: <TableStock/> },
+  { path: "tabela/cliente", element: <TableClient/> },
+
 
 ];
 
