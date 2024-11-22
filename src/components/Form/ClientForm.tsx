@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 interface ClientFormProps {
@@ -28,15 +28,48 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
     phoneNumber: client?.phoneNumber || "",
   });
 
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
   // Handle form input changes
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
+  // Validation function
+  const validateForm = (): boolean => {
+    const newErrors: { [key: string]: string } = {};
+
+    // Validate name and lastName
+    if (!formData.name) newErrors.name = "Nome é obrigatório.";
+    if (!formData.lastName) newErrors.lastName = "Sobrenome é obrigatório.";
+
+    // Validate document (for example: CPF/CNPJ format validation using a simple regex pattern)
+    const documentRegex = /^\d{11}$|^\d{14}$/; // Example: CPF (11 digits) or CNPJ (14 digits)
+    if (!formData.document) newErrors.document = "Documento é obrigatório.";
+    else if (!documentRegex.test(formData.document))
+      newErrors.document = "Documento inválido (CPF ou CNPJ esperado).";
+
+    // Validate phone number (using a regex for Brazilian phone numbers)
+    const phoneRegex = /^[0-9]{10,11}$/; // Example: Brazilian phone number (10 or 11 digits)
+    if (!formData.phoneNumber) newErrors.phoneNumber = "Número de telefone é obrigatório.";
+    else if (!phoneRegex.test(formData.phoneNumber))
+      newErrors.phoneNumber = "Número de telefone inválido (deve ter 10 ou 11 dígitos).";
+
+    // Validate city and street
+    if (!formData.city) newErrors.city = "Cidade é obrigatória.";
+    if (!formData.street) newErrors.street = "Rua é obrigatória.";
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!validateForm()) return; // Do not submit if validation fails
+
     try {
       let createdClient;
       if (formData.idClient) {
@@ -56,8 +89,6 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
     }
   };
 
- 
-
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <h2 className="text-xl font-bold">{formData.idClient ? "Editar Cliente" : "Adicionar Cliente"}</h2>
@@ -75,6 +106,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
           className="w-full px-3 py-2 border rounded"
           required
         />
+        {errors.name && <p className="text-red-500 text-sm">{errors.name}</p>}
       </div>
 
       <div>
@@ -90,6 +122,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
           className="w-full px-3 py-2 border rounded"
           required
         />
+        {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
       </div>
 
       <div>
@@ -105,6 +138,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
           className="w-full px-3 py-2 border rounded"
           required
         />
+        {errors.document && <p className="text-red-500 text-sm">{errors.document}</p>}
       </div>
 
       <div>
@@ -120,6 +154,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
           className="w-full px-3 py-2 border rounded"
           required
         />
+        {errors.city && <p className="text-red-500 text-sm">{errors.city}</p>}
       </div>
 
       <div>
@@ -135,6 +170,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
           className="w-full px-3 py-2 border rounded"
           required
         />
+        {errors.street && <p className="text-red-500 text-sm">{errors.street}</p>}
       </div>
 
       <div>
@@ -150,6 +186,7 @@ const ClientForm: React.FC<ClientFormProps> = ({ client, onClose, onSave }) => {
           className="w-full px-3 py-2 border rounded"
           required
         />
+        {errors.phoneNumber && <p className="text-red-500 text-sm">{errors.phoneNumber}</p>}
       </div>
 
       <div className="flex justify-end space-x-2">
