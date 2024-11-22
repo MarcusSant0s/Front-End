@@ -8,7 +8,7 @@ interface ProductFormProps {
 }
 
 interface Product {
-  id: number;
+  id: number | undefined;
   description: string;
   serialNumber: string;
   active: boolean;
@@ -25,7 +25,7 @@ interface Stock {
 
 const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSave }) => {
   const [formData, setFormData] = useState<Product>({
-    id: product?.id || 0,
+    id: product?.id || undefined,
     description: product?.description || "",
     serialNumber: product?.serialNumber || "",
     active: product?.active ?? true, // Valor padrão true
@@ -81,6 +81,7 @@ const ProductForm: React.FC<ProductFormProps> = ({ product, onClose, onSave }) =
           stock: { idStock: formData.stock.idStock }, // Envia o stock com apenas o id
         });
         createdProduct = response.data; // Produto recém-criado
+        console.log(createdProduct);
       }
       onSave();
       onClose();
