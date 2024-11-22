@@ -22,6 +22,7 @@ const CollaboratorForm: React.FC<CollaboratorFormProps> = ({
     birthDate: collaborator ? collaborator.birthDate : '',
     role: collaborator ? collaborator.role : { id: 0, name: '' }, // Garantir que o role comece como objeto
   });
+  console.log(formData)
 
   const [roles, setRoles] = useState<Role[]>([]);
 
@@ -61,7 +62,7 @@ const CollaboratorForm: React.FC<CollaboratorFormProps> = ({
     e.preventDefault();
     console.log("Sending request with formData:", formData);
     try {
-      if (formData.id === null) {
+      if (formData.id === undefined) {
         // Adicionar um novo colaborador
         await axios.post('http://localhost:8080/api/collaborator', formData);
       } else {
@@ -98,7 +99,7 @@ const CollaboratorForm: React.FC<CollaboratorFormProps> = ({
         />
       </div>
       <div>
-        <label className="block">CPF</label>
+        <label className="block">CPF - CNPJ</label>
         <input
           type="text"
           name="cpf"
@@ -155,7 +156,7 @@ const CollaboratorForm: React.FC<CollaboratorFormProps> = ({
           type="submit"
           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
-          {formData.id === null ? 'Add Collaborator' : 'Save Changes'}
+          {formData.id === undefined ? 'Add Collaborator' : 'Save Changes'}
         </button>
       </div>
     </form>
