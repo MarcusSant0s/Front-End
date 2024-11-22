@@ -1,5 +1,4 @@
-import {useState, useEffect} from 'react'
-import IconLogo from '../../assets/favIcon.png'
+import {useState, useEffect} from 'react' 
 import Hamburguer_Icon from '../SVGs/Hamburguer_Icon'
  
 
@@ -28,12 +27,12 @@ const Header = () => {
   }, [isSidebarAppears]);
 
   return (
-    <header className='bg-gray-800 flex justify-between items-center px-4 py-2'>
+    <header className='bg-gray-800 flex justify-between items-center px-4 py-2 border-b border-gray-800'>
       {/* Icon Logo */}
       <div>
         <a href="">
-        <h1 className='font-dm-serif text-custom-orange text-3xl font-bold italic '> CABOSAT </h1>
-                  </a>
+           <h1 className=' p-1 font-dm-serif text-custom-orange text-3xl font-bold italic '> CABOSAT </h1>
+        </a>
       </div>
 
       {/* Sobreposição e Menu */}
