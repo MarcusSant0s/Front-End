@@ -18,3 +18,14 @@ export interface Role {
     description: string;
     serialNumber: string;
   }
+
+  export interface Stock {
+    idStock?: number;
+    stockName: string;
+  }
+  
+  export interface StockFormProps {
+    onClose: () => void;
+    onSave: () => void;
+    existingStock?: Stock; // Agora o tipo Stock está corretamente definido ou importado
+  }

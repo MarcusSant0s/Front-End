@@ -20,3 +20,7 @@ export interface Role {
     serialNumber: string;
     active: Boolean;
   }
+  export interface Stock {
+    id?: number;
+    stockName: string; 
+  }
