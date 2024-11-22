@@ -66,7 +66,7 @@ const ProductTable: React.FC = () => {
   };
 
   return (
-    <div className="">
+    <div className="container mx-auto mt-8">
       <h1 className="text-xl font-bold mb-4">Produtos</h1>
 
       <button
@@ -89,7 +89,7 @@ const ProductTable: React.FC = () => {
         </Modal>
       )}
 
-<table className="min-w-full table-auto">
+<table className="min-w-full bg-white border border-gray-300">
   <thead>
     <tr>
       <th className="px-4 py-2 border-b">Descrição</th>

@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import StockForm from "../Form/StockForm"; // Ajuste o caminho conforme necessário
+import StockForm from "../Form/StockForm"; // Adjust path as needed
 
 interface Stock {
-  id?: number;
+  idStock?: number;
   stockName: string;
-  products: { productId: number; quantity: number }[];
 }
 
 const StocksTable: React.FC = () => {
@@ -20,20 +19,19 @@ const StocksTable: React.FC = () => {
   const fetchStocks = async () => {
     try {
       const response = await axios.get("http://localhost:8080/api/stock");
-      setStocks(response.data);
+      setStocks(response.data); 
     } catch (error) {
       console.error("Error fetching stocks:", error);
     }
   };
 
   const handleDelete = async (id: number) => {
-      try {
-        await axios.delete(`http://localhost:8080/api/stock/${id}`);
-        setStocks(stocks.filter((stock) => stock.id !== id));
-      } catch (error) {
-        console.error("Error deleting stock:", error);
-      }
-    
+    try {
+      await axios.delete(`http://localhost:8080/api/stock/${id}`);
+      setStocks(stocks.filter((stock) => stock.idStock !== id));
+    } catch (error) {
+      console.error("Error deleting stock:", error);
+    }
   };
 
   const handleEdit = (stock: Stock) => {
@@ -42,14 +40,15 @@ const StocksTable: React.FC = () => {
   };
 
   const handleAdd = () => {
-    setSelectedStock(null);
+    setSelectedStock(null);  // Clear selected stock when adding new stock
     setShowForm(true);
   };
 
   const closeForm = () => setShowForm(false);
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container max-sm:w-screen  md:mx-auto mt-8 md:px-4">
+
       <h1 className="text-2xl font-bold mb-4">Estoques</h1>
       <button
         onClick={handleAdd}
@@ -66,7 +65,7 @@ const StocksTable: React.FC = () => {
         </thead>
         <tbody>
           {stocks.map((stock) => (
-            <tr key={stock.id}>
+            <tr key={stock.idStock}>
               <td className="py-2 px-4 border-b">{stock.stockName}</td>
               <td className="py-2 px-4 border-b">
                 <button
@@ -76,7 +75,13 @@ const StocksTable: React.FC = () => {
                   Editar
                 </button>
                 <button
-                  onClick={() => stock.id && handleDelete(stock.id)}
+                   onClick={() => {
+                    if (stock.idStock) {
+                      handleDelete(stock.idStock);
+                    } else {
+                      console.error("ID do estoque não encontrado.");
+                    }
+                  }}
                   className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
                 >
                   Excluir
@@ -99,8 +104,7 @@ const StocksTable: React.FC = () => {
             <StockForm
               onClose={closeForm}
               onSave={fetchStocks}
-              existingStock={selectedStock || undefined}
-              allProducts={[]} // Passe os produtos aqui, se necessário
+              existingStock={selectedStock || undefined}  // Passing selected stock to form
             />
           </div>
         </div>
