@@ -1,85 +1,66 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { StockFormProps } from "./types"; // Ajuste o caminho conforme sua estrutura
 
-interface Stock {
-  id?: number;
-  stockName: string;
-}
+const StockForm: React.FC<StockFormProps> = ({ onClose, onSave, existingStock }) => {
+  const [stockName, setStockName] = useState<string>("");
 
-// types.ts
-interface Product {
-  id: number;
-  description: string;
-  serialNumber: string;
-  active: boolean;
-}
+  // Preencher os campos se houver um estoque existente
+  useEffect(() => {
+    if (existingStock) {
+      setStockName(existingStock.stockName || "");
+    }
+  }, [existingStock]);
 
+  const handleSubmit = async (event: React.FormEvent) => {
+    event.preventDefault();
 
-interface StockFormProps {
-  onClose: () => void;
-  onSave: () => void;
-  existingStock?: Stock;
-  allProducts: Product[];
-}
+    const stockData = {
+      stockName,
+    };
 
-const StockForm: React.FC<StockFormProps> = ({ onClose, onSave, existingStock, allProducts }) => {
-  const [formData, setFormData] = useState<Stock>({
-    id: existingStock?.id,
-    stockName: existingStock?.stockName || "",
-  });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
-  };
-
-
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
     try {
-      if (formData.id) {
-        // Atualização de estoque
-        await axios.put(`http://localhost:8080/api/stock/${formData.id}`, formData);
+      if (existingStock?.idStock) {
+        // Atualizar estoque existente
+        await axios.put(`http://localhost:8080/api/stock/${existingStock.idStock}`, stockData);
       } else {
-        // Criação de novo estoque
-        await axios.post("http://localhost:8080/api/stock", formData);
+        // Criar novo estoque
+        await axios.post("http://localhost:8080/api/stock", stockData);
       }
-      onSave();
-      onClose();
+
+      onSave(); // Atualizar lista de estoques
+      onClose(); // Fechar formulário
     } catch (error) {
-      console.error("Error saving stock:", error);
+      console.error("Erro ao salvar o estoque:", error);
     }
   };
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      <h2 className="text-xl font-bold">{formData.id ? "Editar Estoque" : "Criar Estoque"}</h2>
       <div>
-        <label htmlFor="stockName" className="block font-medium">
+        <label htmlFor="stockName" className="block text-sm font-semibold">
           Nome do Estoque
         </label>
         <input
-          type="text"
           id="stockName"
-          name="stockName"
-          value={formData.stockName}
-          onChange={handleInputChange}
-          className="w-full px-3 py-2 border rounded"
+          type="text"
+          value={stockName}
+          onChange={(e) => setStockName(e.target.value)}
+          className="w-full p-2 border border-gray-300 rounded"
           required
         />
       </div>
 
-      <div className="flex justify-end space-x-2">
+      <div className="flex space-x-2">
+        <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600">
+          {existingStock ? "Atualizar Estoque" : "Adicionar Estoque"}
+        </button>
         <button
           type="button"
           onClick={onClose}
-          className="px-4 py-2 bg-gray-300 rounded hover:bg-gray-400"
+          className="px-4 py-2 bg-gray-500 text-white rounded hover:bg-gray-600"
         >
           Cancelar
-        </button>
-        <button type="submit" className="px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600">
-          Salvar
         </button>
       </div>
     </form>
