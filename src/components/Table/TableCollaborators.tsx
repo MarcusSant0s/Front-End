@@ -65,7 +65,7 @@ const TableCollaborators: React.FC = () => {
           <tr>
             <th className="py-2 px-4 border-b">Nome</th>
             <th className="py-2 px-4 border-b">Sobrenome</th>
-            <th className="py-2 px-4 border-b">CPF</th>
+            <th className="py-2 px-4 border-b">N° Documento</th>
             <th className="py-2 px-4 border-b">Telefone</th>
             <th className="py-2 px-4 border-b">Data Nascimento</th>
             <th className="py-2 px-4 border-b">Função</th>
