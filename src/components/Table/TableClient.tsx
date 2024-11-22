@@ -61,7 +61,7 @@ const TableClient: React.FC = () => {
   };
 
   return (
-    <div>
+    <div className="container max-sm:w-screen  md:mx-auto mt-8 md:px-4">
       <h1 className="text-xl font-bold mb-4">Clientes</h1>
 
       <button
@@ -84,45 +84,47 @@ const TableClient: React.FC = () => {
         </Modal>
       )}
 
-      <table className="min-w-full table-auto">
-        <thead>
-          <tr>
-            <th className="px-4 py-2 border-b">Nome</th>
-            <th className="px-4 py-2 border-b">Sobrenome</th>
-            <th className="px-4 py-2 border-b">Documento</th>
-            <th className="px-4 py-2 border-b">Cidade</th>
-            <th className="px-4 py-2 border-b">Rua</th>
-            <th className="px-4 py-2 border-b">Número de Telefone</th>
-            <th className="px-4 py-2 border-b">Ações</th>
-          </tr>
-        </thead>
-        <tbody>
-          {clients.map((client) => (
-            <tr key={client.idClient}>
-              <td className="px-4 py-2 border-b text-left">{client.name}</td>
-              <td className="px-4 py-2 border-b text-left">{client.lastName}</td>
-              <td className="px-4 py-2 border-b text-left">{client.document}</td>
-              <td className="px-4 py-2 border-b text-left">{client.city}</td>
-              <td className="px-4 py-2 border-b text-left">{client.street}</td>
-              <td className="px-4 py-2 border-b text-left">{client.phoneNumber}</td>
-              <td className="px-4 py-2 border-b text-left">
-                <button
-                  onClick={() => handleEdit(client)}
-                  className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
-                >
-                  Editar
-                </button>
-                <button
-                  onClick={() => handleDelete(client.idClient)}
-                  className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
-                >
-                  Excluir
-                </button>
-              </td>
+      <div className="overflow-x-auto"> {/* Contêiner para a rolagem */}
+        <table className="min-w-full bg-white border border-gray-300">
+          <thead>
+            <tr>
+              <th className="px-4 py-2 border-b">Nome</th>
+              <th className="px-4 py-2 border-b">Sobrenome</th>
+              <th className="px-4 py-2 border-b">Documento</th>
+              <th className="px-4 py-2 border-b">Cidade</th>
+              <th className="px-4 py-2 border-b">Rua</th>
+              <th className="px-4 py-2 border-b">Número de Telefone</th>
+              <th className="px-4 py-2 border-b">Ações</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {clients.map((client) => (
+              <tr key={client.idClient}>
+                <td className="px-4 py-2 border-b text-left">{client.name}</td>
+                <td className="px-4 py-2 border-b text-left">{client.lastName}</td>
+                <td className="px-4 py-2 border-b text-left">{client.document}</td>
+                <td className="px-4 py-2 border-b text-left">{client.city}</td>
+                <td className="px-4 py-2 border-b text-left">{client.street}</td>
+                <td className="px-4 py-2 border-b text-left">{client.phoneNumber}</td>
+                <td className="px-4 py-2 border-b text-left">
+                  <button
+                    onClick={() => handleEdit(client)}
+                    className="px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+                  >
+                    Editar
+                  </button>
+                  <button
+                    onClick={() => handleDelete(client.idClient)}
+                    className="px-2 py-1 bg-red-500 text-white rounded hover:bg-red-600"
+                  >
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 };
