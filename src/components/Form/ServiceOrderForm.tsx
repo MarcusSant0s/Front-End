@@ -6,6 +6,11 @@ interface Collaborator {
   name: string;
   role: { id: number; name: string };
 }
+interface Collaborator {
+  id: number;
+  name: string;
+  role: { id: number; name: string };
+}
 
 interface Client {
   idClient: number;
@@ -19,9 +24,10 @@ interface Client {
 
 interface ServiceOrder {
   idServiceOrder?: number;
-  collaborator: Collaborator;
+  manager: Collaborator; 
+  technical: Collaborator; 
   client: Client;
-  imagePath: string;
+  imagePath: File | null;
   description: string | null;
   status: string;
   creationDate: string;
@@ -37,9 +43,10 @@ interface ServiceOrderFormProps {
 
 const ServiceOrderForm: React.FC<ServiceOrderFormProps> = ({ serviceOrder, onClose, onSave }) => {
   const [formData, setFormData] = useState<ServiceOrder>({
-    collaborator: { id: 0, name: "", role: { id: 0, name: "" } },
+    manager: { id: 0, name: "", role: { id: 0, name: "" } },
+    technical: { id: 0, name: "", role: { id: 0, name: "" } },
     client: { idClient: 0, name: "", lastName: "", document: "", city: "", street: "", phoneNumber: "" },
-    imagePath: "",
+    imagePath: null,
     description: "",
     status: "Pendente",
     creationDate: "",
@@ -47,6 +54,7 @@ const ServiceOrderForm: React.FC<ServiceOrderFormProps> = ({ serviceOrder, onClo
     lastModified: null,
   });
 
+  const [image, setImage] = useState<File | null>(null);
   const [collaborators, setCollaborators] = useState<Collaborator[]>([]);
   const [clients, setClients] = useState<Client[]>([]);
 
@@ -55,7 +63,9 @@ const ServiceOrderForm: React.FC<ServiceOrderFormProps> = ({ serviceOrder, onClo
     const fetchData = async () => {
       try {
         const collaboratorsResponse = await axios.get("http://localhost:8080/api/collaborator");
+        console.log(collaboratorsResponse)
         setCollaborators(collaboratorsResponse.data);
+
         const clientsResponse = await axios.get("http://localhost:8080/api/client");
         setClients(clientsResponse.data);
 
@@ -71,13 +81,19 @@ const ServiceOrderForm: React.FC<ServiceOrderFormProps> = ({ serviceOrder, onClo
   }, [serviceOrder]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  console.log("handleChange");
+  console.log(e.target.value);
+
+
     const { name, value } = e.target;
-  
-    // Se o nome do campo for 'collaborator' ou 'client', atualize apenas o 'id' do colaborador/cliente.
-    if (name === "collaborator") {
+    console.log(name)
+    console.log(value)
+    
+    if (name === "manager" || name === "technical") {
+      // Garantir que manager e technical sejam sempre objetos
       setFormData((prevData) => ({
         ...prevData,
-        collaborator: { ...prevData.collaborator, id: parseInt(value) },
+        [name]: { ...prevData[name as keyof ServiceOrder], id: parseInt(value) } as Collaborator,
       }));
     } else if (name === "client") {
       setFormData((prevData) => ({
@@ -97,14 +113,40 @@ const ServiceOrderForm: React.FC<ServiceOrderFormProps> = ({ serviceOrder, onClo
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      if (formData.idServiceOrder) {
-        await axios.put(`http://localhost:8080/api/service-orders/${formData.idServiceOrder}`, formData);
-      } else {
-        await axios.post("http://localhost:8080/api/service-orders", formData);
+      const data = new FormData();
+      console.log("pre-data")
+      console.log(data)
+      data.append("serviceOrder", new Blob([JSON.stringify(formData)], { type: "application/json" }));
+
+      if (image) data.append("image", image);
+
+  
+      const formDataEntries = data as unknown as { entries: () => IterableIterator<[string, FormDataEntryValue]> };
+
+      for (const [key, value] of formDataEntries.entries()) {
+        console.log(`${key}:`, value);
       }
+
+
+      if (formData.idServiceOrder) {
+        console.log("Put : \n")
+        console.log(data)
+        await axios.put(`http://localhost:8080/api/service-orders/${formData.idServiceOrder}`, data);
+      } else {
+        console.log("Post : \n")
+        console.log(data)
+        await axios.post("http://localhost:8080/api/service-orders", data);
+      }
+
       onSave();
     } catch (error) {
       console.error("Erro ao salvar a ordem de serviço:", error);
+    }
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      setImage(e.target.files[0]);
     }
   };
 
@@ -112,23 +154,54 @@ const ServiceOrderForm: React.FC<ServiceOrderFormProps> = ({ serviceOrder, onClo
     <div className="modal-content p-6 bg-white rounded-md">
       <h2 className="text-xl font-bold mb-4">{serviceOrder ? "Editar Ordem de Serviço" : "Adicionar Ordem de Serviço"}</h2>
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
-          <label htmlFor="collaborator" className="block font-medium mb-2">
-            Colaborador
+
+ {/* Seleção do colaborador manager */}
+ <div className="mb-4">
+          <label htmlFor="manager" className="block font-medium mb-2">
+            Administrativo
           </label>
           <select
-            id="collaborator"
-            name="collaborator"
-            value={formData.collaborator.id}
+            id="manager"
+            name="manager"
+            value={formData.manager?.id}
             onChange={handleChange}
             className="px-4 py-2 border border-gray-300 rounded-md w-full"
           >
-            <option value="">Selecione um colaborador</option>
-            {collaborators.map((collaborator) => (
-              <option key={collaborator.id} value={collaborator.id}>
-                {collaborator.name}
-              </option>
-            ))}
+            <option value="">Selecione o gerente</option>
+            {collaborators && collaborators.length > 0 ? (
+              collaborators.map((collaborator) => (
+                <option key={collaborator.id} value={collaborator.id}>
+                  {collaborator.name}
+                </option>
+              ))
+            ) : (
+              <option disabled>Não há colaboradores disponíveis</option>
+            )}
+          </select>
+        </div>
+
+        {/* Seleção do colaborador técnico */}
+        <div className="mb-4">
+          <label htmlFor="technical" className="block font-medium mb-2">
+            Técnico
+          </label>
+          <select
+            id="technical"
+            name="technical"
+            value={formData.technical?.id}
+            onChange={handleChange}
+            className="px-4 py-2 border border-gray-300 rounded-md w-full"
+          >
+            <option value="">Selecione o técnico</option>
+            {collaborators && collaborators.length > 0 ? (
+              collaborators.map((collaborator) => (
+                <option key={collaborator.id} value={collaborator.id}>
+                  {collaborator.name}
+                </option>
+              ))
+            ) : (
+              <option disabled>Não há colaboradores disponíveis</option>
+            )}
           </select>
         </div>
 
@@ -155,18 +228,19 @@ const ServiceOrderForm: React.FC<ServiceOrderFormProps> = ({ serviceOrder, onClo
 
         <div className="mb-4">
           <label htmlFor="imagePath" className="block font-medium mb-2">
-          Foto
+            Foto
           </label>
           <input
             id="imagePath"
             name="imagePath"
-            type="text"
-            value={formData.imagePath}
-            onChange={handleChange}
+            type="file"
+            accept="image/*"
+            onChange={handleImageChange}
             className="px-4 py-2 border border-gray-300 rounded-md w-full"
             required
           />
         </div>
+
 
         <div className="mb-4">
           <label htmlFor="description" className="block font-medium mb-2">

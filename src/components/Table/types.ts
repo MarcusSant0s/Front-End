@@ -24,3 +24,9 @@ export interface Role {
     id?: number;
     stockName: string; 
   }
+
+  export interface Role {
+    id: number;
+    name: string;
+  }
+  
